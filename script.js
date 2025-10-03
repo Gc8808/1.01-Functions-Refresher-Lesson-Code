@@ -105,20 +105,63 @@ function clearOutput () {
 
 
 function changeTitle() {
-  document.title = prompt('Enter a new page title:') || document.title
-  render('<p>Page title changed!</p>')
+  const newTitle = prompt('Enter a new page title:')?.trim();
+  
+  if (newTitle) {
+    document.title = newTitle;
+    // Optional: Display confirmation on the page
+    const feedback = document.createElement('p');
+    feedback.textContent = 'Page title changed!';
+    document.body.appendChild(feedback);
+    // Remove feedback after 3 seconds
+    setTimeout(() => feedback.remove(), 3000);
+  } else if (newTitle === '') {
+    alert('Error: Title cannot be empty.');
+  }
 }
 
 function changeTextColor() {
   const colors = ['red', 'blue', 'green', 'purple', 'orange', 'teal']
   const currentColor = document.getElementById('out').style.color
   let newColor = colors[Math.floor(Math.random() * colors.length)]
+  document.getElementById('out').style.color = newColor
 }
 function changeAllColors() {
-  const colors = ['red', 'blue', 'green', 'purple', 'orange', 'teal']
-  const bgColors = ['lightyellow', 'lightblue', 'lightgreen', 'lavender', 'lightcoral', 'lightgray']
+  const bgColors = ['lightyellow', 'lightblue', 'lightgreen', 'lavender', 'lightcoral', 'lightgray'];
+  
+  const element = document.getElementById('out');
+  if (!element) {
+    console.error("Element with ID 'out' not found. Please check the HTML.");
+    return;
+  }
+  
+  // Remove existing background color classes
+  bgColors.forEach(bgColor => element.classList.remove(bgColor));
+  
+  // Select random background color class
+  const selectedBgColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+  
+  // Add the selected class
+  element.classList.add(selectedBgColor);
+  console.log(`Applied class: ${selectedBgColor}`); // Debugging
+  
+  // Fallback: Set background color directly to ensure visibility
+  const colorMap = {
+    lightyellow: 'lightyellow',
+    lightblue: 'lightblue',
+    lightgreen: 'lightgreen',
+    lavender: 'lavender',
+    lightcoral: 'lightcoral',
+    lightgray: 'lightgray'
+  };
+  element.style.backgroundColor = colorMap[selectedBgColor];
+  
+  // Provide user feedback
+  const feedback = document.createElement('p');
+  feedback.textContent = 'Background color changed!';
+  document.body.appendChild(feedback);
+  setTimeout(() => feedback.remove(), 3000);
 }
-
 
 // ---- Event listeners for the demo buttons ----
 document.getElementById('btnGreet').addEventListener('click', greet)
@@ -126,9 +169,9 @@ document.getElementById('btnAvg').addEventListener('click', averageNumbers)
 document.getElementById('btnTime').addEventListener('click', timeOfDay)
 document.getElementById('btnRandom').addEventListener('click', randomBetween)
 document.getElementById('btnClear').addEventListener('click', clearOutput)
-document.getElementById('btnColor').addEventListener('click', clearOutput)
-document.getElementById('btnColor2').addEventListener('click', clearOutput)
-document.getElementById('btnTitle').addEventListener('click', clearOutput)
+document.getElementById('btnColor').addEventListener('click', changeTextColor)
+document.getElementById('btnColor2').addEventListener('click', changeAllColors)
+document.getElementById('btnTitle').addEventListener('click', changeTitle)
 
 /* 
   ------------------------------------------

@@ -68,3 +68,29 @@ main {
   color: #fff;
 }
 #btnClear:hover { background-color: #991b1b; }
+
+.lightyellow { background-color: lightyellow; }
+.lightblue { background-color: lightblue; }
+.lightgreen { background-color: lightgreen; }
+.lavender { background-color: lavender; }
+.lightcoral { background-color: lightcoral; }
+.lightgray { background-color: lightgray; }
+
+.colorChange {
+  animation: changeColors 10s infinite;
+}
+
+@keyframes changeColors {
+  0%   { background-color: lightyellow; }
+  16%  { background-color: lightblue; }
+  33%  { background-color: lightgreen; }
+  50%  { background-color: lavender; }
+  66%  { background-color: lightcoral; }
+  83%  { background-color: lightgray; }
+  100% { background-color: lightyellow; }
+}
+
+#out {
+  padding: 20px;
+  border: 1px solid black;
+}
